@@ -61,7 +61,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @param resolved whether the value handed into the constructor represents a resolved value.
 	 */
 	private Lazy(Supplier<? extends T> supplier, @Nullable T value, boolean resolved) {
-
 		this.supplier = supplier;
 		this.value = value;
 		this.resolved = resolved;
