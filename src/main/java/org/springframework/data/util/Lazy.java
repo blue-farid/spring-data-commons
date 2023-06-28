@@ -15,6 +15,7 @@
  */
 package org.springframework.data.util;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -248,23 +249,12 @@ public class Lazy<T> implements Supplier<T> {
 
 	@Override
 	public boolean equals(@Nullable Object o) {
-		if (this == o) {
-			return true;
-		}
-
-		if (!(o instanceof Lazy<?> lazy)) {
-			return false;
-		}
-
-		if (resolved != lazy.resolved) {
-			return false;
-		}
-
-		if (!ObjectUtils.nullSafeEquals(supplier, lazy.supplier)) {
-			return false;
-		}
-
-		return ObjectUtils.nullSafeEquals(value, lazy.value);
+		return (
+				this == o || ((o instanceof Lazy<?> lazy) &&
+						resolved == lazy.resolved &&
+						ObjectUtils.nullSafeEquals(supplier, lazy.supplier) &&
+						ObjectUtils.nullSafeEquals(value, lazy.value))
+				);
 	}
 
 	@Override
