@@ -85,7 +85,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public static <T> Lazy<T> of(T value) {
-
 		Assert.notNull(value, "Value must not be null");
 
 		return new Lazy<>(() -> value);
@@ -109,7 +108,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public T get() {
-
 		T value = getNullable();
 
 		if (value == null) {
@@ -136,7 +134,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public Lazy<T> or(Supplier<? extends T> supplier) {
-
 		Assert.notNull(supplier, "Supplier must not be null");
 
 		return Lazy.of(() -> orElseGet(supplier));
@@ -149,7 +146,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public Lazy<T> or(T value) {
-
 		Assert.notNull(value, "Value must not be null");
 
 		return Lazy.of(() -> orElse(value));
@@ -164,7 +160,6 @@ public class Lazy<T> implements Supplier<T> {
 	 */
 	@Nullable
 	public T orElse(@Nullable T value) {
-
 		T nullable = getNullable();
 
 		return nullable == null ? value : nullable;
@@ -179,7 +174,6 @@ public class Lazy<T> implements Supplier<T> {
 	 */
 	@Nullable
 	private T orElseGet(Supplier<? extends T> supplier) {
-
 		Assert.notNull(supplier, "Default value supplier must not be null");
 
 		T value = getNullable();
@@ -194,7 +188,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public <S> Lazy<S> map(Function<? super T, ? extends S> function) {
-
 		Assert.notNull(function, "Function must not be null");
 
 		return Lazy.of(() -> function.apply(get()));
@@ -207,7 +200,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @return
 	 */
 	public <S> Lazy<S> flatMap(Function<? super T, Lazy<? extends S>> function) {
-
 		Assert.notNull(function, "Function must not be null");
 
 		return Lazy.of(() -> function.apply(get()).get());
@@ -222,7 +214,6 @@ public class Lazy<T> implements Supplier<T> {
 	 * @since 3.0.1
 	 */
 	public String toString(Supplier<String> fallback) {
-
 		Assert.notNull(fallback, "Fallback must not be null!");
 
 		return resolved ? toString() : fallback.get();
@@ -236,7 +227,6 @@ public class Lazy<T> implements Supplier<T> {
 	 */
 	@Nullable
 	public T getNullable() {
-
 		if (resolved) {
 			return value;
 		}
@@ -249,7 +239,6 @@ public class Lazy<T> implements Supplier<T> {
 
 	@Override
 	public String toString() {
-
 		if (!resolved) {
 			return UNRESOLVED;
 		}
@@ -259,7 +248,6 @@ public class Lazy<T> implements Supplier<T> {
 
 	@Override
 	public boolean equals(@Nullable Object o) {
-
 		if (this == o) {
 			return true;
 		}
@@ -281,7 +269,6 @@ public class Lazy<T> implements Supplier<T> {
 
 	@Override
 	public int hashCode() {
-
 		int result = ObjectUtils.nullSafeHashCode(supplier);
 
 		result = 31 * result + ObjectUtils.nullSafeHashCode(value);
